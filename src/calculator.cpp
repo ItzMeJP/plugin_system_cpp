@@ -56,7 +56,7 @@ void Calculator::executeMenu(bool _dynamic_load){
 
         }
         else{
-            auto p = plugin_manager_.CreateInstanceAs<BaseOperations>(plugin_manager_.m_plugindb.at(option).loaded_plugins_file_names_arr_.at(option),plugin_factor_arr_.at(option)->GetClassName(0));
+            auto p = plugin_manager_.CreateInstanceAs<BaseOperations>(plugin_manager_.loaded_plugins_file_names_arr_.at(option),plugin_factor_arr_.at(option)->GetClassName(0));
             assert(p != nullptr);
             std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
 
