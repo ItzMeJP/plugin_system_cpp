@@ -6,7 +6,7 @@
 #define PLUGIN_TEST_V1_SUBTRACTION_H
 
 #include "base_operations.h"
-#include "psdk/factory.h"
+#include "plugin_handling/factory.h"
 
 class Subtraction : public BaseOperations {
 public:

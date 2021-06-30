@@ -3,9 +3,9 @@ exec_prefix=@CMAKE_INSTALL_PREFIX@
 libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
-Name: @SUM_PLUGIN@
-Description: @SUM_PLUGIN@
-Version: @28_06_2021@
+Name: @PLUGIN_HANDLING@
+Description: @PLUGIN_HANDLING@
+Version: @30_06_2021@
 
 Requires:
 Libs: -L${libdir} -lsum

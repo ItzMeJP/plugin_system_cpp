@@ -1,9 +1,18 @@
 #include <iostream>
 #include "calculator.h"
-int main() {
+int main(int argc, char **argv) {
+
     std::cout << "Running..." << std::endl;
+
     Calculator calc;
-    calc.run();
+    bool dynamic_mode = true;
+
+    if(argc==1)
+        std::cout << "No argument defined. Setting dynamic plugin load mode...\n";
+    else
+        dynamic_mode = std::string(argv[1]) == "1"?true:false;
+    calc.run(dynamic_mode);
+
     return 0;
 }
 

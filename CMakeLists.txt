@@ -21,6 +21,12 @@ include_directories(
 ## Declare a C++ library
 
 # Main lib definition
+
+add_library(plugin_handling SHARED #Shared is to export it latter
+        src/plugin_handling/plugin_handling.cpp
+        #TODO
+        )
+
 add_library(calculator SHARED #Shared is to export it latter
         src/calculator.cpp
         )
@@ -63,15 +69,25 @@ target_link_libraries(multiplication
         )
 
 target_link_libraries(calculator
+        plugin_handling
         sum # REMOVE THIS TO PLUGIN TESTS
         multiplication # REMOVE THIS TO PLUGIN TESTS
         division
         subtraction
+        )
+
+target_link_libraries(plugin_handling
         dl
         )
 
 
 # To export the lib and install it
+
+set_target_properties(plugin_handling PROPERTIES
+        VERSION ${PROJECT_VERSION}
+        PUBLIC_HEADER "include/plugin_handling/plugin_handling.h;include/plugin_handling/interfaces.h"
+        )
+
 set_target_properties(base_operations PROPERTIES
         VERSION ${PROJECT_VERSION}
         PUBLIC_HEADER "include/base_operations.h"
@@ -107,13 +123,13 @@ configure_file(subtraction.pc.in subtraction.pc @ONLY)
 configure_file(multiplication.pc.in multiplication.pc @ONLY)
 configure_file(division.pc.in division.pc @ONLY)
 configure_file(base_operations.pc.in base_operations.pc @ONLY)
-
+configure_file(plugin_handling.pc.in plugin_handling.pc @ONLY)
 
 install(TARGETS sum subtraction multiplication division
         LIBRARY DESTINATION ${PLUGINS_DIR_FOLDER}
         PUBLIC_HEADER DESTINATION ${PLUGINS_DIR_FOLDER}/headers)
 
-install(TARGETS base_operations
+install(TARGETS base_operations plugin_handling
         LIBRARY DESTINATION ${PLUGINS_DIR_FOLDER}
         PUBLIC_HEADER DESTINATION ${PLUGINS_DIR_FOLDER}/headers)
 
@@ -122,6 +138,8 @@ install(FILES ${CMAKE_BINARY_DIR}/sum.pc
               ${CMAKE_BINARY_DIR}/multiplication.pc
               ${CMAKE_BINARY_DIR}/division.pc
               ${CMAKE_BINARY_DIR}/base_operations.pc
+              ${CMAKE_BINARY_DIR}/plugin_handling.pc
+
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig) # TODO: check this validity
 
 #message(${CMAKE_BINARY_DIR})

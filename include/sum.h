@@ -5,7 +5,7 @@
 #define PLUGIN_TEST_V1_SUM_H
 
 #include "base_operations.h"
-#include "psdk/factory.h"
+#include "plugin_handling/factory.h"
 
 
 class Sum : public BaseOperations {

@@ -48,7 +48,9 @@ public:
 
 	explicit Plugin(std::string file)
 	{
+	    file = file;
 		m_file = std::move(file);
+
 
 		#if !defined(_WIN32)
 		  m_hnd = ::dlopen(m_file.c_str(), RTLD_LAZY);
@@ -57,7 +59,7 @@ public:
         #endif
 		m_isLoaded = true;
 		//std::cout<<m_hnd<<std::endl;
-		assert(m_hnd != nullptr);
+		assert(m_hnd != nullptr && "Check the file and path names.");
         #if !defined(_WIN32)
 		  auto dllEntryPoint =
 			  reinterpret_cast<GetPluginInfo_fp>(dlsym(m_hnd, DLLEntryPointName));
@@ -65,7 +67,7 @@ public:
 		  auto dllEntryPoint =
 			  reinterpret_cast<GetPluginInfo_fp>(GetProcAddress((HMODULE) m_hnd, DLLEntryPointName));
         #endif
-		assert(dllEntryPoint != nullptr);
+		assert(dllEntryPoint != nullptr && "Check the plugin design.");
 		// Retrieve plugin metadata from DLL entry-point function
 		m_info = dllEntryPoint();
 	}
@@ -103,11 +105,6 @@ public:
 		return m_info->Factory(className.c_str());
 	}
 
-    void* CreateInstance(int _class_index)
-    {
-        return m_info->Factory(_class_index);
-    }
-
 	bool isLoaded() const
 	{
 		return m_isLoaded;
@@ -138,6 +135,7 @@ public:
 	PluginMap m_plugindb;
 
 	std::vector<Plugin> plugin_arr_;
+	std::vector<std::string> loaded_plugins_file_names_arr_;
 
 	int number_of_plugins_loaded_ = 0;
 	
@@ -162,36 +160,46 @@ public:
 
 	IPluginFactory* addPlugin(const std::string& name)
 	{	  		
-		std::string fileName = "./"+ name + GetExtension();
+		std::string fileName = name + GetExtension();
 		m_plugindb[name] = Plugin(fileName);
+        number_of_plugins_loaded_++;
+        loaded_plugins_file_names_arr_.push_back(name);
 		return m_plugindb[name].GetInfo();
 	}
 
     std::vector<IPluginFactory*> addPlugins(const std::string& _plugins_folder_path){
 
-        std::filesystem::directory_iterator pluginDirectory(_plugins_folder_path);
-        plugin_arr_.clear();
+        std::string sub_s;
         std::vector<IPluginFactory*> aux_arr;
+
         aux_arr.clear();
-        int i=0;
+        ClearPluginList();
+
+	    std::filesystem::directory_iterator pluginDirectory(_plugins_folder_path);
+
         for (auto &pluginFile : pluginDirectory) {
             std::filesystem::path pluginPath = pluginFile.path();
-            std::cout << pluginPath.filename() <<" iterator: "<< i << std::endl;
-            plugin_arr_.push_back(Plugin(pluginPath.filename()));
-            aux_arr.push_back(plugin_arr_.at(i).GetInfo());
-
-            //std::cout << " ---- asasasas --------- " << "\n"
-            //          << "  =>              Name = " << plugin_arr_.at(i).GetInfo()->Name() << "\n";
-            i++;
+            //std::cout << pluginPath.filename() <<" iterator: "<< i << std::endl;
+            sub_s = pluginPath.filename().string().substr(0,pluginPath.filename().string().find("."));
+            plugin_arr_.push_back(Plugin("./" + pluginPath.filename().string()));
+            loaded_plugins_file_names_arr_.push_back(sub_s);
+            aux_arr.push_back(plugin_arr_.at(number_of_plugins_loaded_).GetInfo());
+            //std::cout << sub_s<< std::endl;
+            number_of_plugins_loaded_++;
         }
-        number_of_plugins_loaded_ = i;
-        std::cout << " ---- --------- " << number_of_plugins_loaded_ << "\n";
-
+        //std::cout << " ---- --------- " << number_of_plugins_loaded_ << "\n";
         return aux_arr;
 	}
 
 	int GetNumberOfPluginsLoaded() {
         return number_of_plugins_loaded_;
+    }
+
+    void ClearPluginList() {
+        number_of_plugins_loaded_ = 0;
+        loaded_plugins_file_names_arr_.clear();
+        plugin_arr_.clear();
+	    m_plugindb.clear();
     }
 
     IPluginFactory* GetPluginFactory(const char* pluginName)
@@ -226,19 +234,19 @@ public:
 
     void* CreateInstance(int _plugin_index, std::string className)
     {
-        if(_plugin_index < plugin_arr_.size())
+        if(_plugin_index > plugin_arr_.size())
             return nullptr;
         return plugin_arr_.at(_plugin_index).CreateInstance(className);
     }
 
     void* CreateInstance(int _plugin_index, int _class_index)
     {
-        if(_plugin_index < plugin_arr_.size())
+        if(_plugin_index > plugin_arr_.size())
             return nullptr;
-        if(_class_index < plugin_arr_.at(_plugin_index).GetInfo()->NumberOfClasses())
+        if(_class_index > plugin_arr_.at(_plugin_index).GetInfo()->NumberOfClasses())
             return nullptr;
 
-        return plugin_arr_.at(_plugin_index).CreateInstance(_class_index);
+        return plugin_arr_.at(_plugin_index).CreateInstance(plugin_arr_.at(_plugin_index).GetInfo()->GetClassName(_class_index));
     }
 
 	/** @brief Instantiate a class exported by some loaded plugin.
@@ -254,6 +262,14 @@ public:
 		void* pObj = CreateInstance(std::move(pluginName), std::move(className));
 		return std::shared_ptr<T>(reinterpret_cast<T*>(pObj));
 	}
+
+    template<typename T>
+    std::shared_ptr<T>
+    CreateInstanceAs(int _plugin_index, int _class_index)
+    {
+        void* pObj = CreateInstance(std::move(_plugin_index), std::move(_class_index));
+        return std::shared_ptr<T>(reinterpret_cast<T*>(pObj));
+    }
 	
 }; /* --- End of class PluginManager --- */
 

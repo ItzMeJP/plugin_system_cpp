@@ -3,7 +3,7 @@
 //
 
 #include "base_operations.h"
-#include "psdk/factory.h"
+#include "plugin_handling/factory.h"
 
 #ifndef PLUGIN_TEST_V1_MULTIPLICATION_H
 #define PLUGIN_TEST_V1_MULTIPLICATION_H

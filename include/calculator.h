@@ -5,21 +5,18 @@
 #ifndef PLUGIN_TEST_V1_CALCULATOR_H
 #define PLUGIN_TEST_V1_CALCULATOR_H
 
-#include "psdk/loader.h"
+#include "plugin_handling/plugin_handling.h"
 #include "base_operations.h"
 #include <iostream>
 #include <vector>
 
-class Calculator {
+class Calculator : public PluginHandling{
     public:
         Calculator();
         ~Calculator();
-        void run();
-        void printPluginsInfo(std::vector<IPluginFactory*> &_arr);
-
+        bool run(bool _dynamic_load = true);
+        void executeMenu(bool _dynamic_load);
     protected:
-        bool loadPlugins();
-        bool loadKnownPlugins();
 
 };
 #endif //PLUGIN_TEST_V1_CALCULATOR_H

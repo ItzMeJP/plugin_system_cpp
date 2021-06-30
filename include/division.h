@@ -6,8 +6,7 @@
 #define PLUGIN_TEST_V1_DIVISION_H
 
 #include "base_operations.h"
-#include "psdk/factory.h"
-
+#include "plugin_handling/factory.h"
 
 class Division : public BaseOperations {
 public:

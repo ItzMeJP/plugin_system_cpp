@@ -13,7 +13,6 @@ struct IPluginFactory{
 	
 	/** Instantiate a class from its name */
 	virtual void* Factory(const char* className) const = 0;
-    virtual void* Factory(int _class_index) const = 0;
 
 };
 
