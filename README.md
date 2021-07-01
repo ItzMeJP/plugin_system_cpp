@@ -17,8 +17,9 @@ Plugin system management for C++. An API to load in run-time dynamic libraries c
 
 This package have a calculator app use case example. The calculator functionalities are implemented as plugins and loaded at run-time. The plugins are placed at [plugins folder](./plugins/) after the [instalation](#Installation) procedure.
 
-To run just type:
+To run just type in terminal (after the [instalation](#Installation) procedure):
 ```
+cd build
 ./calculator_app
 ```
 
@@ -39,7 +40,7 @@ The plugins must have this [structure](./templates/plugin_template.h), otherwise
 
 
 ## <a name="Notes"></a>5. Notes
-The system was tested:
+The system was tested on
 - Ubuntu: 20.04
     - Cpp versions: 9.3 and 10.3;
 - ~~Windows~~: **TODO**
