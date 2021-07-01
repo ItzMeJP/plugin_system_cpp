@@ -1,8 +1,11 @@
-//
-// Created by joaopedro on 28/06/21.
-//
+/**\file
+ * \brief
+ * Sum Plugin definition
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
-#include "sum.h"
+#include "plugins/sum.h"
 
 Sum::Sum() {};
 

@@ -12,7 +12,7 @@ Calculator::~Calculator() {};
 
 bool Calculator::run(bool _dynamic_load){
 
-    std::string path = ("/home/joaopedro/clion_ws/plugin_test_v1/plugins_remove/");
+    std::string path = ("/home/joaopedro/clion_ws/plugin_test_v1/plugins/");
 
     if(_dynamic_load)
     {
@@ -62,6 +62,11 @@ void Calculator::executeMenu(bool _dynamic_load){
 
         }
 
+        cout << "Continue?[1-Yes;0-No]" << endl;
+        cin >> option;
+
+        if(option == 0)
+            break;
 
     }
 

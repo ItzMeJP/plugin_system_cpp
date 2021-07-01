@@ -1,8 +1,12 @@
-//
-// Created by joaopedro on 28/06/21.
-//
+/**\file
+ * \brief
+ * Divion Plugin definition
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
-#include "division.h"
+
+#include "plugins/division.h"
 
 Division::Division() {};
 

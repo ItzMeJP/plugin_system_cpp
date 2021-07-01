@@ -1,12 +1,17 @@
-//
-// Created by joaopedro on 28/06/21.
-//
-
-#include "base_operations.h"
-#include "plugin_handling/factory.h"
+/**\file
+ * \brief
+ * Multiplication Plugin declaration
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
 #ifndef PLUGIN_TEST_V1_MULTIPLICATION_H
 #define PLUGIN_TEST_V1_MULTIPLICATION_H
+
+#include "base_operations.h"
+
+// ################## Plugin Classes Definitions  ###########################  //
+
 class Multiplication : public BaseOperations {
 public:
     Multiplication();
@@ -21,14 +26,14 @@ protected:
     float result_ = -9.999;
 };
 
-// ===== Factory Function - Plugin EntryPoint ==== //
+// ################## Factory Function - Plugin EntryPoint  ##################  //
 
-PSDK_PLUGIN_EXPORT_C
+PLUGIN_EXPORT_C
 auto GetPluginFactory() -> IPluginFactory*
 {
 
 static PluginFactory pinfo = []{
-    auto p = PluginFactory("PluginMultiplication", "0.1-alpha");
+    auto p = PluginFactory("PluginMultiplication", "01_06_2021");
     p.registerClass<Multiplication>("Multiplication"); //could register more than one Class inside a plugin...
     return p;
 }();

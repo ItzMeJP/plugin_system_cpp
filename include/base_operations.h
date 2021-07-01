@@ -7,11 +7,12 @@
 
 #include <filesystem>
 #include <iostream>
+#include "plugin_handling/factory.h"
 
 class BaseOperations {
 public:
-    BaseOperations() = default;
-    ~BaseOperations() = default;
+    BaseOperations() {};
+    ~BaseOperations() {};
 
     virtual float operate(float* _input_arr, int _size) = 0;
 };

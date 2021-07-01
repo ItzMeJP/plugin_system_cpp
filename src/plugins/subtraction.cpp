@@ -1,8 +1,11 @@
-//
-// Created by joaopedro on 28/06/21.
-//
+/**\file
+ * \brief
+ * Subtraction Plugin definition
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
-#include "subtraction.h"
+#include "plugins/subtraction.h"
 
 Subtraction::Subtraction() {};
 
