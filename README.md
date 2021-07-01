@@ -40,7 +40,7 @@ The plugins must have this [structure](./templates/plugin_template.h), otherwise
 
 
 ## <a name="Notes"></a>5. Notes
-The system was tested on
+The system was tested on:
 - Ubuntu: 20.04
     - Cpp versions: 9.3 and 10.3;
 - ~~Windows~~: **TODO**
