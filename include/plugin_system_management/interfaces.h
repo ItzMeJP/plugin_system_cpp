@@ -1,7 +1,15 @@
+/**\file
+ * \brief
+ * Interface class that provides plugin's metadata and instantiate exported classes
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza (based on https://github.com/caiorss/sample-cpp-plugin)
+ */
+
 #ifndef _INTERFACES_HPP_
 #define _INTERFACES_HPP_
 
-/** @brief Interface class that provides plugin's metadata and instantiate exported classes */
+#include <vector>
+
 struct IPluginFactory{
 	/** Get Plugin Name */
 	virtual const char* Name() const = 0 ;

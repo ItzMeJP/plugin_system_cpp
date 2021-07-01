@@ -5,8 +5,8 @@
  * @author João Pedro Carvalho de Souza
  */
 
-#ifndef PLUGIN_TEST_V1_MULTIPLICATION_H
-#define PLUGIN_TEST_V1_MULTIPLICATION_H
+#ifndef MULTIPLICATION_H
+#define MULTIPLICATION_H
 
 #include "base_operations.h"
 
@@ -42,10 +42,10 @@ return &pinfo;
 
 struct _DLLInit{
     _DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginMultiplication loaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library PluginMultiplication loaded OK." << std::endl;
     }
     ~_DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginMultiplication unloaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library PluginMultiplication unloaded OK." << std::endl;
     }
 } dll_init;
-#endif //PLUGIN_TEST_V1_MULTIPLICATION_H
+#endif //MULTIPLICATION_H

@@ -5,8 +5,8 @@
  * @author João Pedro Carvalho de Souza
  */
 
-#ifndef PLUGIN_TEST_V1_DIVISION_H
-#define PLUGIN_TEST_V1_DIVISION_H
+#ifndef DIVISION_H
+#define DIVISION_H
 
 #include "base_operations.h"
 
@@ -43,10 +43,10 @@ auto GetPluginFactory() -> IPluginFactory*
 
 struct _DLLInit{
     _DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginDivision loaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library PluginDivision loaded OK." << std::endl;
     }
     ~_DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginDivision unloaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library PluginDivision unloaded OK." << std::endl;
     }
 } dll_init;
-#endif //PLUGIN_TEST_V1_DIVISION_H
+#endif //DIVISION_H

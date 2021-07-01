@@ -1,8 +1,11 @@
-//
-// Created by joaopedro on 01/07/21.
-//
+/**\file
+ * \brief
+ * Factory class definition
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
-#include "plugin_handling/factory.h"
+#include "plugin_system_management/factory.h"
 
 PluginFactory::PluginFactory(const char* name, const char* version):m_name(name),m_version(version){}
 

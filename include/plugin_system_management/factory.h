@@ -1,12 +1,15 @@
+/**\file
+ * \brief
+ * Factory class declaration
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza (based on https://github.com/caiorss/sample-cpp-plugin)
+ */
+
 #ifndef _FACTORY_HPP_
 #define _FACTORY_HPP_
 
-#include <string> 
+#include <string>
 #include <functional>
-#include <map>
-#include <vector>
-#include <algorithm>
-
 #include "interfaces.h"
 
 /** Macro EXPORT_CPP makes a symbol visible. */

@@ -1,3 +1,10 @@
+/**\file
+ * \brief
+ * Calculator main code
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
+
 #include <iostream>
 #include "calculator.h"
 int main(int argc, char **argv) {
@@ -5,29 +12,8 @@ int main(int argc, char **argv) {
     std::cout << "Running..." << std::endl;
 
     Calculator calc;
-    bool dynamic_mode = true;
+    calc.run();
 
-    if(argc==1)
-        std::cout << "No argument defined. Setting dynamic plugin load mode...\n";
-    else
-        dynamic_mode = std::string(argv[1]) == "1"?true:false;
-    calc.run(dynamic_mode);
 
     return 0;
 }
-
-/*
-Sum s;
-float num[] = {2,4,1};
-float *numPtr = &num[0];
-cout << "Result sum: " << s.operate(numPtr,(int) sizeof(num)/sizeof(float)) <<endl;
-
-Multiplication m;
-cout << "Result multiplication: " << m.operate(numPtr,(int) sizeof(num)/sizeof(float)) <<endl;
-
-Division d;
-cout << "Result division: " << d.operate(numPtr,(int) sizeof(num)/sizeof(float)) <<endl;
-
-Subtraction u;
-cout << "Result subtraction: " << u.operate(numPtr,(int) sizeof(num)/sizeof(float)) <<endl;
- */

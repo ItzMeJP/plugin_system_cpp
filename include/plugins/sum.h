@@ -5,8 +5,8 @@
  * @author João Pedro Carvalho de Souza
  */
 
-#ifndef PLUGIN_TEST_V1_SUM_H
-#define PLUGIN_TEST_V1_SUM_H
+#ifndef SUM_H
+#define SUM_H
 
 #include "base_operations.h"
 
@@ -29,12 +29,14 @@ protected:
 
 // ################## Factory Function - Plugin EntryPoint  ##################  //
 
+std::string plugin_name = "PluginSum";
+
 PLUGIN_EXPORT_C
 auto GetPluginFactory() -> IPluginFactory*
 {
 
 static PluginFactory pinfo = []{
-    auto p = PluginFactory("PluginSum", "01_06_2021");
+    auto p = PluginFactory(plugin_name.c_str(), "01_06_2021");
     p.registerClass<Sum>("Sum"); //could register more than one Class inside a plugin...
     return p;
 }();
@@ -43,11 +45,11 @@ return &pinfo;
 
 struct _DLLInit{
     _DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginSum loaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library "<< plugin_name << " loaded OK." << std::endl;
     }
     ~_DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginSum unloaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library "<< plugin_name << " unloaded OK." << std::endl;
     }
 } dll_init;
 
-#endif //PLUGIN_TEST_V1_SUM_H
+#endif //SUM_H

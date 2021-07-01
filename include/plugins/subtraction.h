@@ -5,8 +5,8 @@
  * @author João Pedro Carvalho de Souza
  */
 
-#ifndef PLUGIN_TEST_V1_SUBTRACTION_H
-#define PLUGIN_TEST_V1_SUBTRACTION_H
+#ifndef SUBTRACTION_H
+#define SUBTRACTION_H
 
 #include "base_operations.h"
 
@@ -43,10 +43,10 @@ auto GetPluginFactory() -> IPluginFactory*
 
 struct _DLLInit{
     _DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginSubtraction loaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library PluginSubtraction loaded OK." << std::endl;
     }
     ~_DLLInit(){
-        std::cerr << " [TRACE] Shared library PluginSubtraction unloaded OK." << std::endl;
+        std::cout << " [TRACE] Shared library PluginSubtraction unloaded OK." << std::endl;
     }
 } dll_init;
-#endif //PLUGIN_TEST_V1_SUBTRACTION_H
+#endif //SUBTRACTION_H

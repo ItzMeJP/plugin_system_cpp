@@ -1,22 +1,27 @@
-//
-// Created by joaopedro on 28/06/21.
-//
+/**\file
+ * \brief
+ * Calculator use case declaration
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
-#ifndef PLUGIN_TEST_V1_CALCULATOR_H
-#define PLUGIN_TEST_V1_CALCULATOR_H
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
 
-#include "plugin_handling/plugin_handling.h"
+#include "plugin_system_management/plugin_system_management.h"
 #include "base_operations.h"
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
-class Calculator : public PluginHandling{
+class Calculator {
     public:
         Calculator();
         ~Calculator();
-        bool run(bool _dynamic_load = true);
-        void executeMenu(bool _dynamic_load);
+        bool run();
+        void executeMenu();
     protected:
+    PluginSystemManagement ph_;
 
 };
-#endif //PLUGIN_TEST_V1_CALCULATOR_H
+#endif //CALCULATOR_H

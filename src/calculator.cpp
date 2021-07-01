@@ -1,37 +1,32 @@
-//
-// Created by joaopedro on 28/06/21.
-//
+/**\file
+ * \brief
+ * Calculator use case definition
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
 #include "calculator.h"
-
-using namespace std;
 
 Calculator::Calculator() {};
 
 Calculator::~Calculator() {};
 
-bool Calculator::run(bool _dynamic_load){
+bool Calculator::run(){
 
-    std::string path = ("/home/joaopedro/clion_ws/plugin_test_v1/plugins/");
+    std::string path = (std::filesystem::current_path().parent_path().string() + "/plugins/");
 
-    if(_dynamic_load)
-    {
-        std::cout << "######## DYNAMIC LOAD EXAMPLE ######## \n" << std::endl;
-        if(!loadDynamicPlugins(path,true))
-            return false;
+    if(!ph_.loadDynamicPlugins(path,true)){
+        std::cout << ph_.getOutputMsg() << std::endl;
+        return false;
     }
-    else{
-        std::cout << "######## STATIC LOAD EXAMPLE ######## \n" << std::endl;
-        std::vector<std::string> names_arr{"libsum","libsubtraction","libdivision","libmultiplication"}; // The name must be equal to the plugin.so name (without extension)
-        if(!loadStaticPlugins(names_arr,path,true))
-            return false;
-    }
-    executeMenu(_dynamic_load);
+
+    executeMenu();
+
     return true;
 }
 
 
-void Calculator::executeMenu(bool _dynamic_load){
+void Calculator::executeMenu(){
 
     float num[2];
     float *numPtr;
@@ -39,31 +34,23 @@ void Calculator::executeMenu(bool _dynamic_load){
     for(;;)
     {
         std::cout << "Type two numbers:" << std::endl;
-        cin >> num[0] >> num[1];
+        std::cin >> num[0] >> num[1];
         numPtr = &num[0];
         std::cout << "Select Operation:\n";
 
-        for (size_t i = 0; i < plugin_factor_arr_.size(); ++i) {
-            std::cout << i << ") " << plugin_factor_arr_.at(i)->GetClassName(0)<<"\n";
+        for (size_t i = 0; i < ph_.GetNumberOfPluginsLoaded(); ++i) {
+            std::cout << i << ") " << ph_.GetPluginFactoryInfo(i)->GetClassName(0)<<"\n";
         }
 
-        cin >> option;
+        std::cin >> option;
 
-        if(_dynamic_load){
-            auto p = plugin_manager_.CreateInstanceAs<BaseOperations>(option,0);
-            assert(p != nullptr);
-            std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
+        auto p = ph_.CreateInstanceAs<BaseOperations>(option,0);
+        assert(p != nullptr);
 
-        }
-        else{
-            auto p = plugin_manager_.CreateInstanceAs<BaseOperations>(plugin_manager_.loaded_plugins_file_names_arr_.at(option),plugin_factor_arr_.at(option)->GetClassName(0));
-            assert(p != nullptr);
-            std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
+        std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
 
-        }
-
-        cout << "Continue?[1-Yes;0-No]" << endl;
-        cin >> option;
+        std::cout << "Continue?[1-Yes; 0-No]" << std::endl;
+        std::cin >> option;
 
         if(option == 0)
             break;
@@ -71,72 +58,3 @@ void Calculator::executeMenu(bool _dynamic_load){
     }
 
 }
-
-
-
-
-
-/*
-
-    float num[2];
-    float *numPtr;
-    int option;
-    for(;;)
-    {
-        std::cout << "Type two numbers:" << std::endl;
-        cin >> num[0] >> num[1];
-        numPtr = &num[0];
-        std::cout << "Select Operation\n:";
-
-        for (size_t i = 0; i < plugin_factor_arr_.size(); ++i) {
-            std::cout << i << ")" << plugin_factor_arr_.at(i)->GetClassName(0);
-        }
-
-        cin >> option;
-
-        auto p = plugin_manager_.CreateInstanceAs<BaseOperations>(plugin_factor_arr_.at(option)->Name(),p_factor_arr.at(0)->GetClassName(0));
-
-        switch (option) {
-            case 1:
-            {
-                std::string t0 = "libsum";
-                std::string t1 = p_factor_arr.at(0)->GetClassName(0);
-                auto p = ma.CreateInstanceAs<BaseOperations>(t0,t1);
-                assert(p != nullptr);
-                std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
-                break;
-            }
-            case 2:
-            {
-                std::string t0 = "libsubtraction";
-                std::string t1 = p_factor_arr.at(1)->GetClassName(0);
-                auto p = ma.CreateInstanceAs<BaseOperations>(t0,t1);
-                assert(p != nullptr);
-                std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
-                break;
-            }
-            case 3:
-            {
-                std::string t0 = "libmultiplication";
-                std::string t1 = p_factor_arr.at(3)->GetClassName(0);
-                auto p = ma.CreateInstanceAs<BaseOperations>(t0,t1);
-                assert(p != nullptr);
-                std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
-                break;
-            }
-            case 4:
-            {
-                std::string t0 = "libdivision";
-                std::string t1 = p_factor_arr.at(2)->GetClassName(0);
-                auto p = ma.CreateInstanceAs<BaseOperations>(t0,t1);
-                assert(p != nullptr);
-                std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
-                break;
-            }
-            default:{}
-
-        }
-    }
-
-}
-*/

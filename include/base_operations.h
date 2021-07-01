@@ -1,13 +1,15 @@
-//
-// Created by joaopedro on 28/06/21.
-//
+/**\file
+ * \brief
+ * Math operations interface template declaration
+ * @version 01.07.2021
+ * @author João Pedro Carvalho de Souza
+ */
 
-#ifndef PLUGIN_TEST_V1_BASE_OPERATIONS_H
-#define PLUGIN_TEST_V1_BASE_OPERATIONS_H
+#ifndef BASE_OPERATIONS_H
+#define BASE_OPERATIONS_H
 
-#include <filesystem>
 #include <iostream>
-#include "plugin_handling/factory.h"
+#include "plugin_system_management/factory.h"
 
 class BaseOperations {
 public:
@@ -17,7 +19,4 @@ public:
     virtual float operate(float* _input_arr, int _size) = 0;
 };
 
-// DLL export funcs
-
-
-#endif //PLUGIN_TEST_V1_BASE_OPERATIONS_H
+#endif //BASE_OPERATIONS_H
