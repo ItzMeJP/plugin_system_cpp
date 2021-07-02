@@ -12,7 +12,7 @@ include(GNUInstallDirs)
 
 get_filename_component(CURRENT_DIR ./ ABSOLUTE)
 
-set (INSTALL_PLUGIN_SYSTEM_MANAGEMENT_IN_ROOT False)
+set (INSTALL_PLUGIN_SYSTEM_MANAGEMENT_IN_ROOT True)
 set(PLUGINS_DIR_FOLDER ${CURRENT_DIR}/plugins)
 
 #message(${PLUGINS_DIR_FOLDER})
@@ -21,6 +21,7 @@ set(PLUGINS_DIR_FOLDER ${CURRENT_DIR}/plugins)
 ## Your package locations should be listed before other locations
 include_directories(
         include
+        include/plugin_system_management
 )
 
 ## Declare a C++ library
@@ -80,9 +81,11 @@ target_link_libraries(plugin_system_management
 
 set_target_properties(plugin_system_management PROPERTIES
         #VERSION ${PROJECT_VERSION}
-        PUBLIC_HEADER "include/plugin_system_management/plugin_system_management.h;include/plugin_system_management/interfaces.h"
-        #PRIVATE_HEADER "include/plugin_system_management/plugin.h"
+        PUBLIC_HEADER "include/plugin_system_management/plugin_system_management.h;include/plugin_system_management/factory.h"
+        PRIVATE_HEADER "include/plugin_system_management/plugin.h;include/plugin_system_management/interfaces.h"
         )
+
+target_include_directories(plugin_system_management PRIVATE ./include/)
 
 set_target_properties(sum PROPERTIES
         #VERSION ${PROJECT_VERSION}
@@ -123,17 +126,18 @@ install(FILES ${CMAKE_BINARY_DIR}/sum.pc
 
 
 if(${INSTALL_PLUGIN_SYSTEM_MANAGEMENT_IN_ROOT})
-    MESSAGE("The plugin_system_management is set to be installed in root. Use sudo to install." )
+    MESSAGE(">>>>> The plugin_system_management is set to be installed in root. Use sudo to install." )
     install(TARGETS plugin_system_management
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+            PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/plugin_system_management
+            PRIVATE_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/plugin_system_management)
 
     install(FILES ${CMAKE_BINARY_DIR}/plugin_system_management.pc
             DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
 else()
     # Installing plugin_system_management locally
-    MESSAGE("The plugin_system_management is set to be installed locally." )
+    MESSAGE(">>>>> The plugin_system_management is set to be installed locally." )
     install(TARGETS plugin_system_management
             LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
             PUBLIC_HEADER DESTINATION ${CMAKE_BINARY_DIR}/public_headers)

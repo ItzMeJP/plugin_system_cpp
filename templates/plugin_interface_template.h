@@ -9,7 +9,7 @@
 #define FOO_INTERFACE_H
 
 /** Include the factory interface class that provides plugin's management metadata and instantiate exported classes **/
-#include "plugin_system_management/factory.h"
+#include "factory.h"
 
 class FooInterface {
 public:

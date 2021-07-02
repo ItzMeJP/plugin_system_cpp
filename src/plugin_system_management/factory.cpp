@@ -5,7 +5,7 @@
  * @author João Pedro Carvalho de Souza
  */
 
-#include "plugin_system_management/factory.h"
+#include "factory.h"
 
 PluginFactory::PluginFactory(const char* name, const char* version):m_name(name),m_version(version){}
 

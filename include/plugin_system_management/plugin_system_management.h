@@ -6,8 +6,7 @@
  */
 
 #include <filesystem>
-#include "plugin_system_management/plugin.h"
-#include "base_operations.h"
+#include "plugin.h"
 
 #ifndef PLUGIN_SYSTEM_MANAGEMENT_H
 #define PLUGIN_SYSTEM_MANAGEMENT_H

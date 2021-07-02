@@ -9,7 +9,7 @@
 #define BASE_OPERATIONS_H
 
 #include <iostream>
-#include "plugin_system_management/factory.h"
+#include "factory.h"
 
 class BaseOperations {
 public:

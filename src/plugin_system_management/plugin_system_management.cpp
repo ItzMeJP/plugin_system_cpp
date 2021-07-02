@@ -5,7 +5,7 @@
  * @author João Pedro Carvalho de Souza (based on https://github.com/caiorss/sample-cpp-plugin)
  */
 
-#include "plugin_system_management/plugin_system_management.h"
+#include "plugin_system_management.h"
 
 /// <summary>
 /// Contructor
