@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD 17)
 include(GNUInstallDirs)
 
 get_filename_component(CURRENT_DIR ./ ABSOLUTE)
+
+set (INSTALL_PLUGIN_SYSTEM_MANAGEMENT_IN_ROOT False)
 set(PLUGINS_DIR_FOLDER ${CURRENT_DIR}/plugins)
 
 #message(${PLUGINS_DIR_FOLDER})
@@ -79,7 +81,7 @@ target_link_libraries(plugin_system_management
 set_target_properties(plugin_system_management PROPERTIES
         #VERSION ${PROJECT_VERSION}
         PUBLIC_HEADER "include/plugin_system_management/plugin_system_management.h;include/plugin_system_management/interfaces.h"
-        PRIVATE_HEADER "include/plugin_system_management/plugin.h"
+        #PRIVATE_HEADER "include/plugin_system_management/plugin.h"
         )
 
 set_target_properties(sum PROPERTIES
@@ -113,18 +115,38 @@ install(TARGETS sum subtraction multiplication division
         PUBLIC_HEADER DESTINATION ${CMAKE_BINARY_DIR}/public_headers
         )
 
-install(TARGETS plugin_system_management
-        LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
-        PUBLIC_HEADER DESTINATION ${CMAKE_BINARY_DIR}/public_headers)
-
 install(FILES ${CMAKE_BINARY_DIR}/sum.pc
-              ${CMAKE_BINARY_DIR}/subtraction.pc
-              ${CMAKE_BINARY_DIR}/multiplication.pc
-              ${CMAKE_BINARY_DIR}/division.pc
-              ${CMAKE_BINARY_DIR}/plugin_system_management.pc
+        ${CMAKE_BINARY_DIR}/subtraction.pc
+        ${CMAKE_BINARY_DIR}/multiplication.pc
+        ${CMAKE_BINARY_DIR}/division.pc
+        DESTINATION ${CMAKE_BINARY_DIR}/pkgconfig)
 
-        #DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig) # TODO: check this validity
-        DESTINATION ${CMAKE_BINARY_DIR}/pkgconfig) # TODO: check this validity
+
+if(${INSTALL_PLUGIN_SYSTEM_MANAGEMENT_IN_ROOT})
+    MESSAGE("The plugin_system_management is set to be installed in root. Use sudo to install." )
+    install(TARGETS plugin_system_management
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+    install(FILES ${CMAKE_BINARY_DIR}/plugin_system_management.pc
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
+
+else()
+    # Installing plugin_system_management locally
+    MESSAGE("The plugin_system_management is set to be installed locally." )
+    install(TARGETS plugin_system_management
+            LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
+            PUBLIC_HEADER DESTINATION ${CMAKE_BINARY_DIR}/public_headers)
+
+    install(FILES ${CMAKE_BINARY_DIR}/plugin_system_management.pc
+            DESTINATION ${CMAKE_BINARY_DIR}/pkgconfig)
+endif()
+
+
+
+
+
+
 
 ## Define an executable
 add_executable(calculator_app src/main.cpp)

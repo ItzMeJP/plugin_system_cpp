@@ -9,3 +9,4 @@
 #ignore subdir .git folders
 /libs/SimpleSerialInterface
 /plugins_remove
+/build
