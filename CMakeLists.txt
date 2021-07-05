@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(plugin_test_v1
-        VERSION 01.07.2021
+        VERSION 05.07.2021
         DESCRIPTION
         "Implementation of a calculator using Plugin API")
 
@@ -128,7 +128,7 @@ install(FILES ${CMAKE_BINARY_DIR}/sum.pc
 if(${INSTALL_PLUGIN_SYSTEM_MANAGEMENT_IN_ROOT})
     MESSAGE(">>>>> The plugin_system_management is set to be installed in root. Use sudo to install." )
     install(TARGETS plugin_system_management
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/plugin_system_management
             PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/plugin_system_management
             PRIVATE_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/plugin_system_management)
 
