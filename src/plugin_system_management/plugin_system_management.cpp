@@ -63,7 +63,7 @@ bool PluginSystemManagement::loadDynamicPlugins(std::string _plugins_folder_path
 /// <returns> true if success, false if there are any plugin loading error or none plugin were found.</returns>
 bool PluginSystemManagement::loadDynamicPluginsFromFolder() {
 
-    if(!addPlugins(plugins_folder_path_))
+    if (!addPlugins(plugins_folder_path_))
         return false;
 
     if (GetNumberOfPluginsLoaded() == 0) {
@@ -114,6 +114,28 @@ void PluginSystemManagement::getPluginsInfo(std::string &_plugin_info_str) {
     output_msg_ = "Plugin information returned ";
 
     _plugin_info_str = ss.str();
+}
+
+/// <summary>
+/// Get the loaded plugin list names.
+/// </summary>
+/// <param name="_arr"> The plugin list name.</param>
+/// <returns> false if there is none plugin loaded </returns>
+bool PluginSystemManagement::getLoadedPluginList(std::vector<std::string> &_arr) {
+
+    _arr.clear();
+
+    if (GetNumberOfPluginsLoaded() == 0) {
+        output_msg_ = "Cannot retrieve a plugin list name since none plugin were identified.";
+        return false;
+    }
+
+    for (size_t i = 0; i < GetNumberOfPluginsLoaded(); ++i) {
+        _arr.push_back(plugin_factory_info_arr_.at(i)->Name());
+    }
+
+    return true;
+
 }
 
 /// <summary>
@@ -171,8 +193,9 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
             output_msg_ = "Plugin loading error. Check the plugins file and/or the folder path definitions.";
             return false;
         }
-        if (!plugin_arr_.at(number_of_plugins_loaded_).checkFactoryHandle()){
-            output_msg_ = "Plugin loading error. Plugin \"" + plugin_file_name_arr_.at(number_of_plugins_loaded_) + "\" does not follow the plugin design convention.";
+        if (!plugin_arr_.at(number_of_plugins_loaded_).checkFactoryHandle()) {
+            output_msg_ = "Plugin loading error. Plugin \"" + plugin_file_name_arr_.at(number_of_plugins_loaded_) +
+                          "\" does not follow the plugin design convention.";
             return false;
         }
 
@@ -188,7 +211,7 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
 /// </summary>
 /// <param name="_index"> The stacked index to access the plugin .</param>
 /// <returns> the file name. The file name will be null if the index is out of range </returns>
-std::string PluginSystemManagement::getPluginFileName(int _index){
+std::string PluginSystemManagement::getPluginFileName(int _index) {
     if (_index > plugin_file_name_arr_.size())
         return "NULL -> Index out of range";
     return plugin_file_name_arr_.at(_index);
@@ -235,5 +258,6 @@ void *PluginSystemManagement::CreateInstance(int _plugin_index, int _class_index
     if (_class_index > plugin_arr_.at(_plugin_index).GetInfo()->NumberOfClasses())
         return nullptr;
 
-    return plugin_arr_.at(_plugin_index).CreateInstance(plugin_arr_.at(_plugin_index).GetInfo()->GetClassName(_class_index));
+    return plugin_arr_.at(_plugin_index).CreateInstance(
+            plugin_arr_.at(_plugin_index).GetInfo()->GetClassName(_class_index));
 }

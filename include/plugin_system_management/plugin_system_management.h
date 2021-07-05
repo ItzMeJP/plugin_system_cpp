@@ -26,6 +26,8 @@ public:
 
     void getPluginsInfo(std::string &_plugin_info_str);
 
+    bool getLoadedPluginList(std::vector<std::string>& _arr);
+
     IPluginFactory *GetPluginFactoryInfo(int _index);
 
     std::string getPluginFileName(int _index);
