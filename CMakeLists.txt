@@ -6,7 +6,7 @@ project(plugin_test_v1
 
 set(CMAKE_C_COMPILER "gcc-10")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++-10")
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 include(GNUInstallDirs)
 

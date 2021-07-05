@@ -16,7 +16,7 @@ bool Calculator::run(){
     std::string path = (std::filesystem::current_path().parent_path().string() + "/plugins/");
 
     if(!ph_.loadDynamicPlugins(path,true)){
-        std::cout << ph_.getOutputMsg() << std::endl;
+        std::cout << ph_.getPluginManagementOutputMsg() << std::endl;
         return false;
     }
 
@@ -44,7 +44,10 @@ void Calculator::executeMenu(){
 
         std::cin >> option;
 
-        auto p = ph_.CreateInstanceAs<BaseOperations>(option,0);
+        //By index or...
+        //auto p = ph_.CreateInstanceAs<BaseOperations>(option,0);
+        //By name
+        auto p = ph_.CreateInstanceAs<BaseOperations>(ph_.GetPluginFactoryInfo(option)->Name(),ph_.GetPluginFactoryInfo(option)->GetClassName(0));
         assert(p != nullptr);
 
         std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";

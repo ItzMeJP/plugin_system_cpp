@@ -142,7 +142,7 @@ bool PluginSystemManagement::getLoadedPluginList(std::vector<std::string> &_arr)
 /// Get current API output message
 /// </summary>
 /// <returns> output message. </returns>
-std::string PluginSystemManagement::getOutputMsg() {
+std::string PluginSystemManagement::getPluginManagementOutputMsg() {
     return output_msg_;
 }
 
@@ -212,8 +212,10 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
 /// <param name="_index"> The stacked index to access the plugin .</param>
 /// <returns> the file name. The file name will be null if the index is out of range </returns>
 std::string PluginSystemManagement::getPluginFileName(int _index) {
-    if (_index > plugin_file_name_arr_.size())
+    if (_index > plugin_file_name_arr_.size()) {
+        output_msg_ = "Plugin file name out of range.";
         return "NULL -> Index out of range";
+    }
     return plugin_file_name_arr_.at(_index);
 }
 
@@ -241,8 +243,10 @@ void PluginSystemManagement::ClearPluginList() {
 /// <param name="_index"> The stacked index to access the plugin .</param>
 /// <returns> The plugin factory information. The pointer is null if the index is out of range </returns>
 IPluginFactory *PluginSystemManagement::GetPluginFactoryInfo(int _index) {
-    if (_index > plugin_arr_.size())
+    if (_index > plugin_arr_.size()){
+        output_msg_ = "Factory info _index out of range";
         return nullptr;
+    }
     return plugin_arr_.at(_index).GetInfo();
 }
 
@@ -253,11 +257,17 @@ IPluginFactory *PluginSystemManagement::GetPluginFactoryInfo(int _index) {
 /// <param name="_class_index"> The stacked index to access the class inside the plugin.</param>
 /// <returns> the initialized object. The object will be null if any of the indexes were out of range. </returns>
 void *PluginSystemManagement::CreateInstance(int _plugin_index, int _class_index) {
-    if (_plugin_index > plugin_arr_.size())
+    if (_plugin_index > plugin_arr_.size()){
+        output_msg_ = "_plugin_index out of range";
         return nullptr;
-    if (_class_index > plugin_arr_.at(_plugin_index).GetInfo()->NumberOfClasses())
+    }
+    if (_class_index > plugin_arr_.at(_plugin_index).GetInfo()->NumberOfClasses()){
+        output_msg_ = "_class_index out of range";
         return nullptr;
+    }
 
     return plugin_arr_.at(_plugin_index).CreateInstance(
             plugin_arr_.at(_plugin_index).GetInfo()->GetClassName(_class_index));
 }
+
+
