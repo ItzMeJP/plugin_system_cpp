@@ -31,6 +31,7 @@ public:
     IPluginFactory *GetPluginFactoryInfo(int _index);
 
     std::string getPluginFileName(int _index);
+    int getIndexOfPlugin(std::string _plugin_filename);
 
     int GetNumberOfPluginsLoaded();
 

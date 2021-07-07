@@ -220,6 +220,22 @@ std::string PluginSystemManagement::getPluginFileName(int _index) {
 }
 
 /// <summary>
+/// Get the index associated with the plugin file name in the stack pile.
+/// </summary>
+/// <param name="_plugin_filename"> The file name.</param>
+/// <returns> The stacked index to access the plugin. The index will be null if the index is out of range </returns>
+int PluginSystemManagement::getIndexOfPlugin(std::string _plugin_filename) {
+    std::vector<std::string>::iterator it;
+    it = std::find(plugin_file_name_arr_.begin(), plugin_file_name_arr_.end(), _plugin_filename);
+    if (it != plugin_file_name_arr_.end())
+    {
+        return std::distance( plugin_file_name_arr_.begin(), it );
+    }
+    else
+        return -1;
+}
+
+/// <summary>
 /// Get the number of successfully plugins loaded.
 /// </summary>
 /// <returns> the number of successfully plugins loaded. </returns>
