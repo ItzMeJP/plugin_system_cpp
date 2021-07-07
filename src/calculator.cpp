@@ -47,7 +47,9 @@ void Calculator::executeMenu(){
         //By index or...
         //auto p = ph_.CreateInstanceAs<BaseOperations>(option,0);
         //By name
-        auto p = ph_.CreateInstanceAs<BaseOperations>(ph_.GetPluginFactoryInfo(option)->Name(),ph_.GetPluginFactoryInfo(option)->GetClassName(0));
+        //auto p = ph_.CreateInstanceAs<BaseOperations>(ph_.GetPluginFactoryInfo(option)->Name(),ph_.GetPluginFactoryInfo(option)->GetClassName(0));
+        std::shared_ptr<BaseOperations> p = ph_.CreateInstanceAs<BaseOperations>(ph_.GetPluginFactoryInfo(option)->Name(),ph_.GetPluginFactoryInfo(option)->GetClassName(0));
+
         assert(p != nullptr);
 
         std::cout << "Result = " << p->operate(numPtr,(int) sizeof(num)/sizeof(float)) << "\n";
