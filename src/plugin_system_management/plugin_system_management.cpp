@@ -182,15 +182,24 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
 
     for (auto &pluginFile : pluginDirectory) {
 
+        //std::cout <<" PLUGIN: pluginFile.path() " <<  pluginFile.path().string() << std::endl;
+
         pluginPath = pluginFile.path();
         sub_s = pluginPath.filename().string().substr(0, pluginPath.filename().string().find(GetExtension()));
 
-        plugin_arr_.push_back(Plugin("./" + pluginPath.filename().string()));
+        //std::cout <<" PLUGIN: pluginPath.filename() " <<   pluginPath.filename().string() << std::endl;
+        //std::cout <<" PLUGIN: sub_s " <<   sub_s << std::endl;
+
+        char first_letter = pluginFile.path().string().at(0);
+
+        std::string append = first_letter != '/'?"/":"";
+        //std::cout <<" PLUGIN: cmd to exec plugin " <<  append + pluginFile.path().string() << std::endl;
+
+        plugin_arr_.push_back(Plugin(  append + pluginFile.path().string()));
         plugin_file_name_arr_.push_back(sub_s);
 
-
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkSharedLibHandle()) {
-            output_msg_ = "Plugin loading error. Check the plugins file and/or the folder path definitions.";
+            output_msg_ = "Plugin \"" + plugin_file_name_arr_.at(number_of_plugins_loaded_) +  "\" loading error. Check the plugins file and/or the folder path definitions.";
             return false;
         }
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkFactoryHandle()) {
