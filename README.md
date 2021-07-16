@@ -36,8 +36,9 @@ make install
 ## <a name="Usage"></a>4. Creating a Plugin
 
 The API is design to load libraries with a specific interface class that provides plugin's metadata and instantiate exported classes. See [this example](./templates/plugin_interface_template.h).
-The plugins must have this [structure](./templates/plugin_template.h), otherwise the manager will not be able to load them.
+The plugins must have this [structure](./templates/plugin_template.h) (i.e. a footnote code part addition), otherwise the manager will not be able to load them.
 
+**NOTE**: Avoid inheritance between plugins. The plugin **must** be the last child class, i.e., the class that have the footnote code part addition cannot be a parent class.
 
 ## <a name="Notes"></a>5. Notes
 The system was tested on:
