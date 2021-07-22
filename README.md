@@ -28,10 +28,10 @@ cd build
 mkdir build
 cd build
 cmake ..
-cd ..
-cd build
 make install
 ```
+
+After the installation the shared libs will be located at ```/usr/local/lib/plugin_system_management```. The headers files will be located at ```/usr/local/include/plugin_system_management```
 
 ## <a name="Usage"></a>4. Creating a Plugin
 

@@ -136,7 +136,6 @@ if(${INSTALL_PLUGIN_SYSTEM_MANAGEMENT_IN_ROOT})
             DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
 else()
-    # Installing plugin_system_management locally
     MESSAGE(">>>>> The plugin_system_management is set to be installed locally." )
     install(TARGETS plugin_system_management
             LIBRARY DESTINATION ${CMAKE_BINARY_DIR}
@@ -145,9 +144,6 @@ else()
     install(FILES ${CMAKE_BINARY_DIR}/plugin_system_management.pc
             DESTINATION ${CMAKE_BINARY_DIR}/pkgconfig)
 endif()
-
-
-
 
 
 
