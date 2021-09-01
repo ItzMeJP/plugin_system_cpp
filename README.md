@@ -40,6 +40,9 @@ The plugins must have this [structure](./templates/plugin_template.h) (i.e. a fo
 
 **NOTE**: Avoid inheritance between plugins. The plugin **must** be the last child class, i.e., the class that have the footnote code part addition cannot be a parent class.
 
+**NOTE**: Despite working as a typical class, plugin classes should be avoided as a typical class instantiation. Until now, this situation leads to multiple classes constructions that, at a destruction stage, can lead to "double free or corruption" issues.
+Therefore, the instantion should be made by the PluginManagement method [CreateInstanceAs](./src/plugin_system_management/plugin_system_management.cpp) as such presented in [calculator example](./src/calculator.cpp).
+
 ## <a name="Notes"></a>5. Notes
 The system was tested on:
 - Ubuntu: 20.04

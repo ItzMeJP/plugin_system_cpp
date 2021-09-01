@@ -14,7 +14,6 @@ Plugin::~Plugin() {
 }
 
 Plugin::Plugin(std::string file){
-        file = file;
         m_file = std::move(file);
 
 #if !defined(_WIN32)
@@ -23,6 +22,8 @@ Plugin::Plugin(std::string file){
         m_hnd  = (void*) ::LoadLibraryA(m_file.c_str());
 #endif
         m_isLoaded = true;
+        //std::cout<< "file: " <<m_file.c_str()<<std::endl;
+        //std::cout<< "m_file: " <<m_file.c_str()<<std::endl;
         //assert(m_hnd != nullptr && "\n>>>> Check the file and path names.\n");
         if (m_hnd != nullptr) {
 #if !defined(_WIN32)

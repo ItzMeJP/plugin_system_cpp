@@ -184,6 +184,8 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
 
         //std::cout <<" PLUGIN: pluginFile.path() " <<  pluginFile.path().string() << std::endl;
 
+        std::cout <<" loading plugin number " <<  number_of_plugins_loaded_ << std::endl;
+
         pluginPath = pluginFile.path();
         sub_s = pluginPath.filename().string().substr(0, pluginPath.filename().string().find(GetExtension()));
 
@@ -195,11 +197,13 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
         std::string append = first_letter != '/'?"/":"";
         //std::cout <<" PLUGIN: cmd to exec plugin " <<  append + pluginFile.path().string() << std::endl;
 
+
         plugin_arr_.push_back(Plugin(  append + pluginFile.path().string()));
         plugin_file_name_arr_.push_back(sub_s);
 
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkSharedLibHandle()) {
-            output_msg_ = "Plugin \"" + plugin_file_name_arr_.at(number_of_plugins_loaded_) +  "\" loading error. Check the plugins file and/or the folder path definitions.";
+            output_msg_ = "Plugin \"" + plugin_file_name_arr_.at(number_of_plugins_loaded_) +
+                    "\" loading error. Check the plugins file and/or the folder path definitions. \nCurrent command to execute the plugin: " + append + pluginFile.path().string();
             return false;
         }
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkFactoryHandle()) {
