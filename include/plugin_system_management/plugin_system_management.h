@@ -5,6 +5,13 @@
  * @author João Pedro Carvalho de Souza
  */
 
+#define MSG_PREFIX "<PluginSystemManagement> "
+#ifndef NDEBUG
+#define DEBUG_MSG(str) do { std::cout << "\033[;33m" << MSG_PREFIX << str << "\033[0m"<< std::endl; } while( false )
+#else
+#define DEBUG_MSG(str) do { } while ( false )
+#endif
+
 #include <filesystem>
 #include "plugin.h"
 

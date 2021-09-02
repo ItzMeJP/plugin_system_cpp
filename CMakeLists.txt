@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(plugin_test_v1
-        VERSION 05.07.2021
+        VERSION 02.09.2021
         DESCRIPTION
         "Implementation of a calculator using Plugin API")
 

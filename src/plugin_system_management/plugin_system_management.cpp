@@ -50,7 +50,7 @@ bool PluginSystemManagement::loadDynamicPlugins(std::string _plugins_folder_path
     if (_log) {
         std::string log_str = "";
         getPluginsInfo(log_str);
-        std::cout << log_str << std::endl;
+        DEBUG_MSG (  "Loaded plugins information:\n\n" << log_str );
     }
 
     return true;
@@ -184,7 +184,7 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
 
         //std::cout <<" PLUGIN: pluginFile.path() " <<  pluginFile.path().string() << std::endl;
 
-        std::cout <<" loading plugin number " <<  number_of_plugins_loaded_ << std::endl;
+        //std::cout <<" loading plugin number " <<  number_of_plugins_loaded_ << std::endl;
 
         pluginPath = pluginFile.path();
         sub_s = pluginPath.filename().string().substr(0, pluginPath.filename().string().find(GetExtension()));
