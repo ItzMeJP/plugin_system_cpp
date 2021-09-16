@@ -56,7 +56,7 @@ public:
 
     Plugin(Plugin const &) = delete;
 
-    Plugin &operator=(const Plugin &) = delete;
+    Plugin &operator=(const Plugin &);
 
     Plugin(Plugin &&rhs);
 

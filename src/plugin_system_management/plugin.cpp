@@ -9,15 +9,15 @@
 
 Plugin::Plugin(){}
 
-Plugin::~Plugin() {
-    //this->Unload();
+Plugin::~Plugin() { // TODO: error: The destructor is called everytime that a plugin is construct...
+   // this->Unload();
 }
 
 Plugin::Plugin(std::string file){
         m_file = std::move(file);
 
 #if !defined(_WIN32)
-        m_hnd = ::dlopen(m_file.c_str(), RTLD_LAZY);
+        m_hnd = ::dlopen(m_file.c_str(), RTLD_NOW);
 #else
         m_hnd  = (void*) ::LoadLibraryA(m_file.c_str());
 #endif
@@ -85,6 +85,7 @@ bool Plugin::checkFactoryHandle() {
 }
 
 void Plugin::Unload() {
+
     if (m_hnd != nullptr) {
 #if !defined(_WIN32)
         ::dlclose(m_hnd);

@@ -15,7 +15,9 @@ PluginSystemManagement::PluginSystemManagement() {};
 /// <summary>
 /// Destructor
 /// </summary>
-PluginSystemManagement::~PluginSystemManagement() {};
+PluginSystemManagement::~PluginSystemManagement() {
+    this->ClearPluginList();
+};
 
 /// <summary>
 /// Set plugins folder path
@@ -197,8 +199,7 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
         std::string append = first_letter != '/'?"/":"";
         //std::cout <<" PLUGIN: cmd to exec plugin " <<  append + pluginFile.path().string() << std::endl;
 
-
-        plugin_arr_.push_back(Plugin(  append + pluginFile.path().string()));
+        plugin_arr_.push_back(Plugin (append + pluginFile.path().string()));
         plugin_file_name_arr_.push_back(sub_s);
 
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkSharedLibHandle()) {
@@ -260,6 +261,11 @@ int PluginSystemManagement::GetNumberOfPluginsLoaded() {
 /// Clear the plugin stacks
 /// </summary>
 void PluginSystemManagement::ClearPluginList() {
+
+    for (size_t i = 0; i < plugin_arr_.size(); ++i) {
+        DEBUG_MSG("Unloading/destructing plugin: " << plugin_file_name_arr_.at(i));
+        plugin_arr_.at(i).Unload();
+    }
     number_of_plugins_loaded_ = 0;
     plugin_file_name_arr_.clear();
     plugin_factory_info_arr_.clear();

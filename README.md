@@ -38,6 +38,8 @@ After the installation the shared libs will be located at ```/usr/local/lib/plug
 The API is design to load libraries with a specific interface class that provides plugin's metadata and instantiate exported classes. See [this example](./templates/plugin_interface_template.h).
 The plugins must have this [structure](./templates/plugin_template.h) (i.e. a footnote code part addition), otherwise the manager will not be able to load them.
 
+**NOTE**: All plugins need to have memory management implicit. In other words, if pointers or mallocs are used be sure that in the end the plugin will delete/free them. The plugin system management (Unix version) uses the [dlfcn](https://pubs.opengroup.org/onlinepubs/7908799/xsh/dlfcn.h.html) lib that does not support the identification of inner dynamic lib memory allocations.
+
 **NOTE**: Avoid inheritance between plugins. The plugin **must** be the last child class, i.e., the class that have the footnote code part addition cannot be a parent class.
 
 **NOTE**: Despite working as a typical class, plugin classes should be avoided as a typical class instantiation. Until now, this situation leads to multiple classes constructions that, at a destruction stage, can lead to "double free or corruption" issues.
