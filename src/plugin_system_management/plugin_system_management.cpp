@@ -204,7 +204,7 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
 
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkSharedLibHandle()) {
             output_msg_ = "Plugin \"" + plugin_file_name_arr_.at(number_of_plugins_loaded_) +
-                    "\" loading error. Check the plugins file and/or the folder path definitions. \nCurrent command to execute the plugin: " + append + pluginFile.path().string();
+                    "\" loading error.\n" + dlerror() ;
             return false;
         }
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkFactoryHandle()) {
