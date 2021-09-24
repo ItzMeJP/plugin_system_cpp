@@ -10,7 +10,12 @@
 /// <summary>
 /// Contructor
 /// </summary>
-PluginSystemManagement::PluginSystemManagement() {};
+PluginSystemManagement::PluginSystemManagement() {
+    number_of_plugins_loaded_ = 0;
+    plugin_file_name_arr_.clear();
+    plugin_factory_info_arr_.clear();
+    plugin_arr_.clear();
+};
 
 /// <summary>
 /// Destructor
@@ -261,6 +266,9 @@ int PluginSystemManagement::GetNumberOfPluginsLoaded() {
 /// Clear the plugin stacks
 /// </summary>
 void PluginSystemManagement::ClearPluginList() {
+
+    if(plugin_arr_.size()==0)
+        return;
 
     for (size_t i = 0; i < plugin_arr_.size(); ++i) {
         DEBUG_MSG("Unloading/destructing plugin: " << plugin_file_name_arr_.at(i));
