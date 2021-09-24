@@ -129,11 +129,10 @@ public:
         return std::shared_ptr<T>(reinterpret_cast<T *>(pObj));
     }
 
+    void ClearPluginList();
 
 protected:
     bool loadDynamicPluginsFromFolder();
-
-    void ClearPluginList();
 
     std::string GetExtension() const;
 
