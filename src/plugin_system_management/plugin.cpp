@@ -10,7 +10,7 @@
 Plugin::Plugin(){}
 
 Plugin::~Plugin() { // TODO: error: The destructor is called everytime that a plugin is constructed...
-   // this->Unload();
+    this->Unload();
 }
 
 Plugin::Plugin(std::string file){

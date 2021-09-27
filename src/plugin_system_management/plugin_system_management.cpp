@@ -204,7 +204,7 @@ bool PluginSystemManagement::addPlugins(const std::string &_plugins_folder_path)
         std::string append = first_letter != '/'?"/":"";
         //std::cout <<" PLUGIN: cmd to exec plugin " <<  append + pluginFile.path().string() << std::endl;
 
-        plugin_arr_.push_back(Plugin (append + pluginFile.path().string()));
+        plugin_arr_.emplace_back(append + pluginFile.path().string());
         plugin_file_name_arr_.push_back(sub_s);
 
         if (!plugin_arr_.at(number_of_plugins_loaded_).checkSharedLibHandle()) {

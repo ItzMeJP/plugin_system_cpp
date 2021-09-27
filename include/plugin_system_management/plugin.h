@@ -54,9 +54,9 @@ public:
 
     ~Plugin();
 
-    Plugin(Plugin const &) = delete;
+    Plugin(Plugin const &) = delete; // do not copy a plugin
 
-    Plugin &operator=(const Plugin &);
+    //Plugin &operator=(const Plugin &);
 
     Plugin(Plugin &&rhs);
 
